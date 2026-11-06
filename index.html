@@ -572,8 +572,7 @@ body.light .display {
   </div>
 
   <div class="search-container">
-    <input type="text" class="search-bar" id="searchBar"
-    placeholder="Pesquisar..." oninput="filterContent()">
+    <input type="text" class="search-bar" id="searchBar" placeholder="Pesquisar..." oninput="filterContent()">
   </div>
 
   <div class="category-section" id="cat-jogos">
@@ -592,43 +591,16 @@ body.light .display {
     <div class="overlay-name" id="overlayName">Visualizar</div>
     <button class="close-btn" onclick="closeFrame()">✕ Fechar</button>
   </div>
-  <iframe id="main-frame"
-    allowfullscreen
-    allow="autoplay; fullscreen; gamepad; clipboard-write">
-  </iframe>
+  <iframe id="main-frame" allowfullscreen allow="autoplay; fullscreen; gamepad; clipboard-write"></iframe>
   <div class="frame-tip">Alguns sites podem bloquear a abertura dentro do CALC ZX.</div>
 </div>
 
 <script>
 const jogosData = [
-  {
-    name: "Bloxd.io",
-    url: "https://bloxd.io",
-    target: "tab",
-    desc: "Mundo de blocos 3D",
-    img: "https://www.google.com/s2/favicons?domain=bloxd.io&sz=128"
-  },
-  {
-    name: "Smash Karts",
-    url: "https://smashkarts.io",
-    target: "tab",
-    desc: "Corrida explosiva",
-    img: "https://www.google.com/s2/favicons?domain=smashkarts.io&sz=128"
-  },
-  {
-    name: "Poxel.io",
-    url: "https://poxel.io",
-    target: "tab",
-    desc: "Ação multiplayer em pixel art",
-    img: "https://www.google.com/s2/favicons?domain=poxel.io&sz=128"
-  },
-  {
-    name: "Discord",
-    url: "https://discord.com/login",
-    target: "tab",
-    desc: "Comunicação",
-    img: "https://www.google.com/s2/favicons?domain=discord.com&sz=128"
-  }
+  {name:"Bloxd.io",url:"https://bloxd.io",target:"tab",desc:"Mundo de blocos 3D",img:"https://www.google.com/s2/favicons?domain=bloxd.io&sz=128"},
+  {name:"Smash Karts",url:"https://smashkarts.io",target:"tab",desc:"Corrida explosiva",img:"https://www.google.com/s2/favicons?domain=smashkarts.io&sz=128"},
+  {name:"Poxel.io",url:"https://poxel.io",target:"tab",desc:"Ação multiplayer em pixel art",img:"https://www.google.com/s2/favicons?domain=poxel.io&sz=128"},
+  {name:"Discord",url:"https://discord.com/login",target:"tab",desc:"Comunicação",img:"https://www.google.com/s2/favicons?domain=discord.com&sz=128"}
 ];
 
 const escolaData = [
@@ -641,7 +613,6 @@ const escolaData = [
   {name:"Google Drive",url:"https://drive.google.com",target:"tab",desc:"Armazenamento de arquivos"},
   {name:"Google Docs",url:"https://docs.google.com",target:"tab",desc:"Editor de textos"},
   {name:"Google Spreadsheets",url:"https://sheets.google.com",target:"tab",desc:"Planilhas"},
-  {name:"Google Slides",url:"https://slides.google.com",target:"tab",desc:"Apresentações de slides"},
   {name:"Google Agenda",url:"https://calendar.google.com",target:"tab",desc:"Organizador de horários"},
   {name:"Cronômetro",url:"https://www.google.com/search?q=cronometro",target:"tab",desc:"Contador de tempo"},
   {name:"Bloco de notas",url:"https://rapidtables.com/tools/notepad.html",target:"tab",desc:"Anotações rápidas"},
@@ -651,7 +622,6 @@ const escolaData = [
 function buildGrid(data, containerId, hasImg) {
   const container = document.getElementById(containerId);
   container.innerHTML = "";
-
   data.forEach(item => {
     const card = document.createElement("div");
     card.className = "extra-card";
@@ -660,38 +630,29 @@ function buildGrid(data, containerId, hasImg) {
     if (hasImg && item.img) {
       const banner = document.createElement("div");
       banner.className = "extra-banner";
-
       const img = document.createElement("img");
       img.src = item.img;
       img.alt = item.name;
       img.onerror = () => banner.style.display = "none";
-
       banner.appendChild(img);
       card.appendChild(banner);
     }
 
     const body = document.createElement("div");
     body.className = "extra-body";
-
     const name = document.createElement("div");
     name.className = "extra-name";
     name.textContent = item.name;
-
     const desc = document.createElement("div");
     desc.className = "extra-desc";
     desc.textContent = item.desc;
-
     const button = document.createElement("button");
     button.className = "open-btn";
     button.textContent = "Abrir";
-
     body.append(name, desc, button);
     card.appendChild(body);
 
-    card.addEventListener("click", () => {
-      handleItem(item.url, item.target, item.name);
-    });
-
+    card.addEventListener("click", () => handleItem(item.url, item.target, item.name));
     container.appendChild(card);
   });
 }
@@ -720,12 +681,10 @@ function handleItem(url, target, name) {
     exitExtra();
     return;
   }
-
   if (target === "tab") {
     window.open(url, "_blank", "noopener,noreferrer");
     return;
   }
-
   document.getElementById("overlayName").textContent = name;
   document.getElementById("main-frame").src = url;
   document.getElementById("frame-overlay").style.display = "flex";
@@ -738,23 +697,18 @@ function closeFrame() {
 
 function filterContent() {
   const query = document.getElementById("searchBar").value.toLowerCase();
-
   ["cat-jogos", "cat-escola"].forEach(id => {
     const section = document.getElementById(id);
     const cards = section.querySelectorAll(".extra-card");
     let visible = 0;
-
     cards.forEach(card => {
       const show = card.dataset.name.includes(query);
       card.style.display = show ? "flex" : "none";
       if (show) visible++;
     });
-
     section.style.display = visible ? "block" : "none";
   });
 }
-
-// ========== CALCULADORA ==========
 
 let codeMode = false;
 let current = "0";
@@ -775,7 +729,6 @@ function toggleCode() {
   codeMode = !codeMode;
   toggleEl.classList.toggle("active", codeMode);
   clearAll();
-
   if (codeMode) {
     resultEl.classList.add("code-active");
     resultEl.textContent = "____";
@@ -795,10 +748,8 @@ function toggleAngle() {
 function press(val) {
   if (codeMode) {
     if (!/^[0-9]$/.test(val)) return;
-
     if (current === "____" || justCalc) current = val;
     else if (current.length < 4) current += val;
-
     justCalc = false;
     resultEl.textContent = current.padEnd(4, "_");
     return;
@@ -808,13 +759,11 @@ function press(val) {
     current = "0";
     expr = "";
   }
-
   justCalc = false;
 
   if (current === "0" && /^[0-9]$/.test(val)) current = val;
   else if (current === "0" && val === ".") current = "0.";
   else current += val;
-
   update();
 }
 
@@ -832,7 +781,6 @@ function backspace() {
     resultEl.textContent = current.padEnd(4, "_");
     return;
   }
-
   current = current.length > 1 ? current.slice(0, -1) : "0";
   update();
 }
@@ -840,9 +788,7 @@ function backspace() {
 function calculate() {
   if (codeMode) {
     const code = current.replace(/_/g, "");
-
     if (code === "0000") {
-      // Código correto
       codeMode = false;
       toggleEl.classList.remove("active");
       resultEl.classList.remove("code-active");
@@ -867,11 +813,63 @@ function calculate() {
       .replace(/sqrt\(/g, "Math.sqrt(")
       .replace(/log\(/g, "Math.log10(")
       .replace(/ln\(/g, "Math.log(")
-      .replace(/sin\(/g, "Math.sin(") 
+      .replace(/sin\(/g, "Math.sin(")
       .replace(/cos\(/g, "Math.cos(")
       .replace(/tan\(/g, "Math.tan(")
       .replace(/\^/g, "**");
 
     if (degrees) {
       safe = safe
-      
+        .replace(/Math\.sin\(/g, "Math.sin(Math.PI/180*")
+        .replace(/Math\.cos\(/g, "Math.cos(Math.PI/180*")
+        .replace(/Math\.tan\(/g, "Math.tan(Math.PI/180*");
+    }
+
+    safe = safe.replace(/(\d+(?:\.\d+)?)%/g, "($1/100)");
+
+    if (!/^[0-9+\-*/().\sA-Za-z]*$/.test(safe)) {
+      throw new Error("Expressão inválida");
+    }
+
+    constconst answer = Function('"use strict"; return (' + safe + ')')();
+
+    if (typeof answer !== "number" || !isFinite(answer)) {
+      throw new Error("Resultado inválido");
+    }
+
+    let formatted = Number(answer.toPrecision(12)).toString();
+    expr = current + " =";
+    current = formatted;
+    justCalc = true;
+    update();
+  } catch (err) {
+    current = "Erro";
+    expr = "";
+    justCalc = true;
+    update();
+  }
+}
+
+function toggleTheme() {
+  document.body.classList.toggle("light");
+}
+
+document.addEventListener("keydown", (e) => {
+  if (document.getElementById("extra-screen").style.display === "block") return;
+  const key = e.key;
+  if (key >= "0" && key <= "9") press(key);
+  else if (key === ".") press(".");
+  else if (key === "+") press("+");
+  else if (key === "-") press("−");
+  else if (key === "*") press("×");
+  else if (key === "/") press("÷");
+  else if (key === "Enter" || key === "=") calculate();
+  else if (key === "Backspace") backspace();
+  else if (key === "Escape" || key.toLowerCase() === "c") clearAll();
+  else if (key === "(") press("(");
+  else if (key === ")") press(")");
+  else if (key === "%") press("%");
+});
+</script>
+</body>
+</html>
