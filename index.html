@@ -867,10 +867,11 @@ function calculate() {
       .replace(/sqrt\(/g, "Math.sqrt(")
       .replace(/log\(/g, "Math.log10(")
       .replace(/ln\(/g, "Math.log(")
-      .replace(/sin\(/g, "Math.sin(")
+      .replace(/sin\(/g, "Math.sin(") 
       .replace(/cos\(/g, "Math.cos(")
       .replace(/tan\(/g, "Math.tan(")
       .replace(/\^/g, "**");
 
     if (degrees) {
       safe = safe
+      
